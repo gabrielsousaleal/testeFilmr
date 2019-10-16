@@ -35,4 +35,13 @@ class FilmeVM {
         
     }
     
+    func getUrlVideo() -> URL? {
+        
+        guard let url = URL(string: filme.video_url ?? "") else { return nil }
+        
+        return url
+        
+    }
+    
+    
 }

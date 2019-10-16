@@ -25,9 +25,15 @@ class FilmesViewController: UIViewController {
     var listaFilmes: [FilmeDecodable] = []
     private var ultimoItemMostradoCollection: CGFloat = 0
     
+    
+    //MARK: FUNCOES DA VIEW
     override func viewDidLoad() {
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         setarLayoutCells()
+        
+        setupNavigationController(navigationController: self.navigationController!)
      
         setarDelegates()
         
@@ -45,6 +51,8 @@ class FilmesViewController: UIViewController {
     }
     
     
+    
+    //MARK: FUNCOES DE CHAMADA
     func baixarFilmes( completion: @escaping (Bool) -> () ) {
         
         DAO().baixarFilmes { listaFilmes in
@@ -96,13 +104,15 @@ class FilmesViewController: UIViewController {
         
     }
     
-}
-
-
-extension FilmesViewController {
-     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    func setupNavigationController(navigationController: UINavigationController) {
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.isTranslucent = true
+        navigationController.view.backgroundColor = .clear
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.barStyle = .black
     }
+    
 }
 
 extension FilmesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -129,6 +139,18 @@ extension FilmesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.nomeLabel.text = modelView.getNomeVideo()
 
         return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let filme = listaFilmes[indexPath.row]
+        
+        let playerVC = UIStoryboard(name: "PlayerStoryboard", bundle: nil).instantiateViewController(identifier: "PlayerViewController") as? PlayerViewController
+        
+        playerVC?.filme = filme
+        
+        navigationController?.pushViewController(playerVC!, animated: true)
         
     }
     

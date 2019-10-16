@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Player View Controller-->
+        <scene sceneID="3SC-Fs-Gw9">
+            <objects>
+                <viewController storyboardIdentifier="PlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oJV-Ek-6zS" customClass="PlayerViewController" customModule="testeFilmr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ubj-Ia-7ZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtR-dh-T5Y">
+                                <rect key="frame" x="16" y="27" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="CLk-l0-OLJ"/>
+                                    <constraint firstAttribute="width" constant="34" id="Ufg-G3-SHL"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="voltar:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="jbW-R6-a8u"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome do vídeo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Znw-sz-Nvq">
+                                <rect key="frame" x="102.5" y="27" width="170" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ps-Es-2GG">
+                                <rect key="frame" x="16" y="435" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.10878124090000001" green="0.52744328979999999" blue="0.93438071010000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Ir para o site">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="irParaOSite:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="0dd-KQ-x5T"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WxB-b1-i1G" customClass="PlayerView" customModule="testeFilmr" customModuleProvider="target">
+                                <rect key="frame" x="16" y="130" width="343" height="210"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="210" id="zAW-vA-x45"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Cg6-ye-QiF" firstAttribute="trailing" secondItem="9ps-Es-2GG" secondAttribute="trailing" constant="16" id="07w-kx-0Th"/>
+                            <constraint firstItem="Znw-sz-Nvq" firstAttribute="leading" secondItem="YtR-dh-T5Y" secondAttribute="trailing" constant="52.5" id="1Yf-ZN-72m"/>
+                            <constraint firstItem="Cg6-ye-QiF" firstAttribute="trailing" secondItem="WxB-b1-i1G" secondAttribute="trailing" constant="16" id="1j9-T3-L5F"/>
+                            <constraint firstItem="YtR-dh-T5Y" firstAttribute="leading" secondItem="Cg6-ye-QiF" secondAttribute="leading" constant="16" id="9fq-FI-Ftm"/>
+                            <constraint firstItem="WxB-b1-i1G" firstAttribute="centerX" secondItem="Cg6-ye-QiF" secondAttribute="centerX" id="DJ0-Ih-2F4"/>
+                            <constraint firstItem="Znw-sz-Nvq" firstAttribute="centerX" secondItem="Cg6-ye-QiF" secondAttribute="centerX" id="GYe-K9-fXh"/>
+                            <constraint firstItem="9ps-Es-2GG" firstAttribute="top" secondItem="WxB-b1-i1G" secondAttribute="bottom" constant="95" id="OvH-LY-nBF"/>
+                            <constraint firstItem="YtR-dh-T5Y" firstAttribute="top" secondItem="Cg6-ye-QiF" secondAttribute="top" constant="27" id="TEm-e3-aEF"/>
+                            <constraint firstItem="9ps-Es-2GG" firstAttribute="leading" secondItem="Cg6-ye-QiF" secondAttribute="leading" constant="16" id="X5c-lo-ugG"/>
+                            <constraint firstItem="WxB-b1-i1G" firstAttribute="leading" secondItem="Cg6-ye-QiF" secondAttribute="leading" constant="16" id="cxU-Ue-O9T"/>
+                            <constraint firstItem="WxB-b1-i1G" firstAttribute="top" secondItem="Znw-sz-Nvq" secondAttribute="bottom" constant="71" id="hBB-lw-zPG"/>
+                            <constraint firstItem="Znw-sz-Nvq" firstAttribute="top" secondItem="Cg6-ye-QiF" secondAttribute="top" constant="27" id="mxu-0v-mYq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cg6-ye-QiF"/>
+                    </view>
+                    <connections>
+                        <outlet property="botaoVoltar" destination="YtR-dh-T5Y" id="bSS-1f-j5j"/>
+                        <outlet property="nomeLabel" destination="Znw-sz-Nvq" id="wm8-RD-tre"/>
+                        <outlet property="siteBotao" destination="9ps-Es-2GG" id="GCC-O7-ZkN"/>
+                        <outlet property="videoView" destination="WxB-b1-i1G" id="ooW-nP-wqq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JfH-I2-0Ih" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="348" y="-196.55172413793105"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="back" width="512" height="512"/>
+    </resources>
+</document>
