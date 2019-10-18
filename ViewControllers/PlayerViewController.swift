@@ -24,6 +24,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet var tempoAtual: UILabel!
     @IBOutlet var tempoMaximo: UILabel!
     @IBOutlet var botaoPlay: UIButton!
+    @IBOutlet var fullscreen: UIView!
     
     //MARK: VARIAVEIS
     var filme: FilmeDecodable?
@@ -36,6 +37,10 @@ class PlayerViewController: UIViewController {
     var site: String?
     var tempoMaximoInt: Int?
     var tempoAtualInt: Int?
+    var estaFullScreen = false
+    var playerLayer: AVPlayerLayer?
+    var antigoFrameVideoView: CGRect?
+    @IBOutlet var videoContainer: UIView!
     
     
     //MARK: FUNCOES DA VIEW
@@ -50,6 +55,56 @@ class PlayerViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
          player?.removeTimeObserver(observable!)
      }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            
+            if estaFullScreen { return }
+            
+            estaFullScreen = true
+     
+            fullscreen.isHidden = false
+            
+            antigoFrameVideoView = videoView.frame
+                        
+            videoView.translatesAutoresizingMaskIntoConstraints = true
+            
+            videoView.layer.borderWidth = 0
+
+            fullscreen.addSubview(videoView)
+            
+            videoView.frame = CGRect(x: 0, y: 0, width: self.view.frame.height, height: self.view.frame.width)
+
+        } else {
+            
+            if !estaFullScreen { return }
+  
+            videoView.translatesAutoresizingMaskIntoConstraints = false
+            
+            videoView.layer.borderWidth = 1
+            
+            videoView.frame = antigoFrameVideoView!
+                      
+            fullscreen.isHidden = true
+            
+            estaFullScreen = false
+            
+            videoContainer.addSubview(videoView)
+            
+            let top = NSLayoutConstraint(item: videoView!, attribute: .top, relatedBy: .equal, toItem: videoContainer, attribute: .top, multiplier: 1, constant: 0)
+            
+            
+             let bottom = NSLayoutConstraint(item: videoView!, attribute: .bottom, relatedBy: .equal, toItem: videoContainer, attribute: .bottom, multiplier: 1, constant: 0)
+            
+             let left = NSLayoutConstraint(item: videoView!, attribute: .left, relatedBy: .equal, toItem: videoContainer, attribute: .left, multiplier: 1, constant: 0)
+            
+             let right = NSLayoutConstraint(item: videoView!, attribute: .right, relatedBy: .equal, toItem: videoContainer, attribute: .right, multiplier: 1, constant: 0)
+            
+            NSLayoutConstraint.activate([top,bottom,left,right])
+            
+         }
+    }
     
     
     //MARK: LAYOUT
@@ -70,9 +125,7 @@ class PlayerViewController: UIViewController {
         guard let url = viewModel.getUrlVideo() else { return }
                                 
         iniciarVideo(url: url)
-        
-        //tempoMaximo.text = "\()"
-        
+                
     }
     
     func mostrarAlert(mensagem: String){
@@ -120,6 +173,7 @@ class PlayerViewController: UIViewController {
             
             let valorMaximo = self.player?.currentItem?.duration.value
             let timescaleMaximo = self.player?.currentItem?.duration.timescale
+            if valorMaximo == 0 { return }
             self.tempoMaximoInt = Int(valorMaximo!) / Int(timescaleMaximo!)
             
             self.slider.maximumValue = Float(self.tempoMaximoInt!)
@@ -171,12 +225,12 @@ class PlayerViewController: UIViewController {
     
     func configurarPlayerLayer(){
         
-        let playerLayer = videoView.layer as! AVPlayerLayer
-               playerLayer.player = player
-               playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-               player!.automaticallyWaitsToMinimizeStalling = true
-               playerLayer.borderColor = #colorLiteral(red: 0.1087812409, green: 0.5274432898, blue: 0.9343807101, alpha: 1)
-               playerLayer.borderWidth = 1
+        playerLayer = videoView.layer as? AVPlayerLayer
+        playerLayer!.player = player
+        playerLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        player!.automaticallyWaitsToMinimizeStalling = true
+        playerLayer!.borderColor = #colorLiteral(red: 0.1087812409, green: 0.5274432898, blue: 0.9343807101, alpha: 1)
+        playerLayer!.borderWidth = 1
         
     }
     
