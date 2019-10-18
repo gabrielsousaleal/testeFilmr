@@ -308,6 +308,7 @@ class PlayerViewController: UIViewController {
     
     @IBAction func mudarTempoSlider(_ sender: Any) {
         
+        player?.seek(to: CMTime(seconds: Double(slider!.value), preferredTimescale: 1))
         
     }
     
