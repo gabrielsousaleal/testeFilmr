@@ -23,6 +23,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet var slider: UISlider!
     @IBOutlet var tempoAtual: UILabel!
     @IBOutlet var tempoMaximo: UILabel!
+    @IBOutlet var botaoPlay: UIButton!
     
     //MARK: VARIAVEIS
     var filme: FilmeDecodable?
@@ -33,6 +34,8 @@ class PlayerViewController: UIViewController {
     var estaNoMenu = false
     var estaPausado = false
     var site: String?
+    var tempoMaximoInt: Int?
+    var tempoAtualInt: Int?
     
     
     //MARK: FUNCOES DA VIEW
@@ -117,12 +120,12 @@ class PlayerViewController: UIViewController {
             
             let valorMaximo = self.player?.currentItem?.duration.value
             let timescaleMaximo = self.player?.currentItem?.duration.timescale
-            let tempoMaximo = Int(valorMaximo!) / Int(timescaleMaximo!)
+            self.tempoMaximoInt = Int(valorMaximo!) / Int(timescaleMaximo!)
             
-            self.slider.maximumValue = Float(tempoMaximo)
+            self.slider.maximumValue = Float(self.tempoMaximoInt!)
             
-            let minutosMaximo = (tempoMaximo % 3600) / 60
-            let segundosMaximmo = (tempoMaximo % 3600) % 60
+            let minutosMaximo = (self.tempoMaximoInt! % 3600) / 60
+            let segundosMaximmo = (self.tempoMaximoInt! % 3600) % 60
             
             var segundosStringMaximo = ""
             
@@ -137,12 +140,12 @@ class PlayerViewController: UIViewController {
             
             let valorAtual = self.player?.currentItem?.currentTime().value
             let timescaleAtual = self.player?.currentItem?.currentTime().timescale
-            let tempoAtual = Int(valorAtual!) / Int(timescaleAtual!)
+            self.tempoAtualInt = Int(valorAtual!) / Int(timescaleAtual!)
             
-            self.slider.value = Float(tempoAtual)
+            self.slider.value = Float(self.tempoAtualInt!)
             
-            let minutosAtual = (tempoAtual % 3600) / 60
-            let segundosAtual = (tempoAtual % 3600) % 60
+            let minutosAtual = (self.tempoAtualInt! % 3600) / 60
+            let segundosAtual = (self.tempoAtualInt! % 3600) % 60
             
             
             var segundosStringAtual = ""
@@ -155,15 +158,14 @@ class PlayerViewController: UIViewController {
             
             self.tempoAtual.text = "\(minutosAtual):\(segundosStringAtual)"
             
+            if self.tempoAtualInt == self.tempoMaximoInt {
+                
+                self.botaoPlay.setImage(UIImage(named: "play"), for: .normal)
+                
+            }
+            
         
           })
-        
-          NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player!.currentItem, queue: .main) { _ in
-                  DispatchQueue.main.async {
-                      self.player!.seek(to: CMTime.zero)
-                      self.player!.play()
-                  }
-              }
         
     }
     
@@ -250,6 +252,19 @@ class PlayerViewController: UIViewController {
         }
         
         sender.setImage(imagem, for: .normal)
+        
+        if self.tempoAtualInt == self.tempoMaximoInt {
+            
+            self.botaoPlay.setImage(UIImage(named: "pause"), for: .normal)
+            
+            player?.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
+            
+            player?.play()
+            
+            estaPausado = false
+            
+        }
+        
         
     }
     

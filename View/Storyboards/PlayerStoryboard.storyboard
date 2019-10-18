@@ -110,6 +110,7 @@
                                     <constraint firstAttribute="height" constant="44" id="KZZ-gD-LNQ"/>
                                     <constraint firstAttribute="width" constant="44" id="c8r-ZR-gjS"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="pause"/>
                                 <connections>
                                     <action selector="pausar:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="lhw-pp-ol9"/>
@@ -191,6 +192,7 @@
                     </view>
                     <connections>
                         <outlet property="botaoAvancarNoVideo" destination="yGJ-t4-mkM" id="ciH-cc-xw0"/>
+                        <outlet property="botaoPlay" destination="Yrt-1B-B9D" id="xSr-ng-qqt"/>
                         <outlet property="botaoVoltar" destination="YtR-dh-T5Y" id="bSS-1f-j5j"/>
                         <outlet property="botaoVoltarNoVideo" destination="0bp-DX-KyS" id="tZL-pL-FlE"/>
                         <outlet property="menuView" destination="KDB-ah-iba" id="iCQ-eJ-nLh"/>
