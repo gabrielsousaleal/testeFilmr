@@ -122,6 +122,9 @@
                                     <constraint firstAttribute="height" constant="32" id="nmM-2v-fey"/>
                                 </constraints>
                                 <state key="normal" image="next"/>
+                                <connections>
+                                    <action selector="avancarNoVideo:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="1DM-Mj-EqX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bp-DX-KyS">
                                 <rect key="frame" x="87" y="403" width="32" height="32"/>
@@ -130,11 +133,17 @@
                                     <constraint firstAttribute="height" constant="32" id="xT5-EH-ihm"/>
                                 </constraints>
                                 <state key="normal" image="backVideo"/>
+                                <connections>
+                                    <action selector="voltarNoVideo:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="w9U-tn-496"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5vO-OT-992">
                                 <rect key="frame" x="14" y="469" width="347" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.10878124090000001" green="0.52744328979999999" blue="0.93438071010000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="thumbTintColor" red="0.10878124090000001" green="0.52744328979999999" blue="0.93438071010000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="mudarTempoSlider:" destination="oJV-Ek-6zS" eventType="valueChanged" id="1Ee-rc-Acf"/>
+                                </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yf-FY-7Oj">
                                 <rect key="frame" x="16" y="507" width="36" height="21"/>
@@ -142,8 +151,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hja-aZ-k09">
-                                <rect key="frame" x="327" y="506" width="33" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hja-aZ-k09">
+                                <rect key="frame" x="324" y="506" width="36" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -181,10 +190,15 @@
                         <viewLayoutGuide key="safeArea" id="Cg6-ye-QiF"/>
                     </view>
                     <connections>
+                        <outlet property="botaoAvancarNoVideo" destination="yGJ-t4-mkM" id="ciH-cc-xw0"/>
                         <outlet property="botaoVoltar" destination="YtR-dh-T5Y" id="bSS-1f-j5j"/>
+                        <outlet property="botaoVoltarNoVideo" destination="0bp-DX-KyS" id="tZL-pL-FlE"/>
                         <outlet property="menuView" destination="KDB-ah-iba" id="iCQ-eJ-nLh"/>
                         <outlet property="nomeLabel" destination="Znw-sz-Nvq" id="wm8-RD-tre"/>
                         <outlet property="siteBotao" destination="9ps-Es-2GG" id="GCC-O7-ZkN"/>
+                        <outlet property="slider" destination="5vO-OT-992" id="KCR-Gz-sQo"/>
+                        <outlet property="tempoAtual" destination="0yf-FY-7Oj" id="HpY-cR-3w9"/>
+                        <outlet property="tempoMaximo" destination="Hja-aZ-k09" id="nBz-a4-Qoa"/>
                         <outlet property="videoView" destination="WxB-b1-i1G" id="ooW-nP-wqq"/>
                     </connections>
                 </viewController>

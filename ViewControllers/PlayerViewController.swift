@@ -18,7 +18,11 @@ class PlayerViewController: UIViewController {
     @IBOutlet var nomeLabel: UILabel!
     @IBOutlet var siteBotao: UIButton!
     @IBOutlet var menuView: UIView!
-    
+    @IBOutlet var botaoVoltarNoVideo: UIButton!
+    @IBOutlet var botaoAvancarNoVideo: UIButton!
+    @IBOutlet var slider: UISlider!
+    @IBOutlet var tempoAtual: UILabel!
+    @IBOutlet var tempoMaximo: UILabel!
     
     //MARK: VARIAVEIS
     var filme: FilmeDecodable?
@@ -64,6 +68,8 @@ class PlayerViewController: UIViewController {
                                 
         iniciarVideo(url: url)
         
+        //tempoMaximo.text = "\()"
+        
     }
     
     func mostrarAlert(mensagem: String){
@@ -108,6 +114,48 @@ class PlayerViewController: UIViewController {
         observable = player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main, using: { time in
               self.carregando = false
               self.loading?.stopAnimating()
+            
+            let valorMaximo = self.player?.currentItem?.duration.value
+            let timescaleMaximo = self.player?.currentItem?.duration.timescale
+            let tempoMaximo = Int(valorMaximo!) / Int(timescaleMaximo!)
+            
+            self.slider.maximumValue = Float(tempoMaximo)
+            
+            let minutosMaximo = (tempoMaximo % 3600) / 60
+            let segundosMaximmo = (tempoMaximo % 3600) % 60
+            
+            var segundosStringMaximo = ""
+            
+            if segundosMaximmo < 10 {
+                segundosStringMaximo = "0\(segundosMaximmo)"
+            } else {
+                segundosStringMaximo = "\(segundosMaximmo)"
+            }
+            
+            
+            self.tempoMaximo.text = "\(minutosMaximo):\(segundosStringMaximo)"
+            
+            let valorAtual = self.player?.currentItem?.currentTime().value
+            let timescaleAtual = self.player?.currentItem?.currentTime().timescale
+            let tempoAtual = Int(valorAtual!) / Int(timescaleAtual!)
+            
+            self.slider.value = Float(tempoAtual)
+            
+            let minutosAtual = (tempoAtual % 3600) / 60
+            let segundosAtual = (tempoAtual % 3600) % 60
+            
+            
+            var segundosStringAtual = ""
+                       
+                       if segundosAtual < 10 {
+                           segundosStringAtual = "0\(segundosAtual)"
+                       } else {
+                           segundosStringAtual = "\(segundosAtual)"
+                       }
+            
+            self.tempoAtual.text = "\(minutosAtual):\(segundosStringAtual)"
+            
+        
           })
         
           NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player!.currentItem, queue: .main) { _ in
@@ -202,6 +250,49 @@ class PlayerViewController: UIViewController {
         }
         
         sender.setImage(imagem, for: .normal)
+        
+    }
+    
+    @IBAction func voltarNoVideo(_ sender: Any) {
+        
+        let valorVoltar : Float64 = 5
+
+              if player == nil { return }
+              if let duration  = player!.currentItem?.duration {
+              let playerCurrentTime = CMTimeGetSeconds(player!.currentTime())
+              let newTime = playerCurrentTime - valorVoltar
+              if newTime < CMTimeGetSeconds(duration)
+              {
+                  let selectedTime: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
+                  player!.seek(to: selectedTime)
+              }
+              player?.pause()
+              player?.play()
+              }
+        
+    }
+    
+    @IBAction func avancarNoVideo(_ sender: Any) {
+        
+        let valorAvancar : Float64 = 5
+
+        if player == nil { return }
+        if let duration  = player!.currentItem?.duration {
+        let playerCurrentTime = CMTimeGetSeconds(player!.currentTime())
+        let newTime = playerCurrentTime + valorAvancar
+        if newTime < CMTimeGetSeconds(duration)
+        {
+            let selectedTime: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
+            player!.seek(to: selectedTime)
+        }
+        player?.pause()
+        player?.play()
+        }
+        
+    }
+    
+    @IBAction func mudarTempoSlider(_ sender: Any) {
+        
         
     }
     
