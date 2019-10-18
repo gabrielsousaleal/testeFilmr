@@ -46,6 +46,8 @@ class PlayerViewController: UIViewController {
     //MARK: FUNCOES DA VIEW
     override func viewDidLoad() {
         
+        liberarLandscape(.all)
+        
         addGesture()
         
         popularView()
@@ -135,6 +137,13 @@ class PlayerViewController: UIViewController {
         present(alert, animated: true)
         
     }
+    
+    func liberarLandscape(_ orientation: UIInterfaceOrientationMask) {
+
+           if let delegate = UIApplication.shared.delegate as? AppDelegate {
+               delegate.orientationLock = orientation
+           }
+       }
  
     
     

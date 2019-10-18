@@ -31,6 +31,8 @@ class FilmesViewController: UIViewController {
         
         self.navigationController?.navigationBar.isHidden = true
         
+        travarPortrait(.portrait)
+        
         setarLayoutCells()
         
         setupNavigationController(navigationController: self.navigationController!)
@@ -111,6 +113,13 @@ class FilmesViewController: UIViewController {
         navigationController.view.backgroundColor = .clear
         navigationController.navigationBar.tintColor = .white
         navigationController.navigationBar.barStyle = .black
+    }
+    
+    func travarPortrait(_ orientation: UIInterfaceOrientationMask) {
+
+        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+            delegate.orientationLock = orientation
+        }
     }
     
 }
