@@ -89,7 +89,7 @@ class DAO {
         guard let url = URL(string: "https://elasticbeanstalk-us-east-1-508049151276.s3.amazonaws.com/FilmrTest/db.json") else { return }
         
             URLSession.shared.dataTask(with: url) { (data, response, error) in
-                            
+                                            
             guard let data = data, error == nil else {return}
             
             do {

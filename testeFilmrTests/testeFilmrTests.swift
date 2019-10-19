@@ -10,25 +10,104 @@ import XCTest
 @testable import testeFilmr
 
 class testeFilmrTests: XCTestCase {
+    
+    var dao: DAO!
+    var filmesVC: FilmesViewController!
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        dao = DAO()
+        
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    //TESTES DOWNLOADS DOS JSON
+    func testarDownloadDaURLLogo(){
+        
+        let exp = expectation(description: "Pegar URL logo")
+        
+        var urlLogo: URL?
+        
+        dao.baixarLogoUrl { url in
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+            urlLogo = URL(string: url)
+            exp.fulfill()
+            
         }
+        
+        waitForExpectations(timeout: 10) { erro in
+            
+            if let erro = erro {
+                 XCTFail("waitForExpectationsWithTimeout errored: \(erro)")
+            }
+            
+            print("URL da logo:", urlLogo!)
+            
+            XCTAssertFalse(urlLogo == nil)
+        
+        }
+        
     }
+    
+    func testarDownloadDaURLSite(){
+        
+        let exp = expectation(description: "Pegar URL site")
+        
+        var urlSite: URL?
+        
+        dao.baixarSite { url in
 
+            urlSite = URL(string: url)
+            exp.fulfill()
+            
+        }
+        
+        waitForExpectations(timeout: 10) { erro in
+            
+            if let erro = erro {
+                 XCTFail("waitForExpectationsWithTimeout errored: \(erro)")
+            }
+            
+            print("URL do site:", urlSite!)
+            
+            XCTAssertFalse(urlSite == nil)
+         
+           }
+    }
+    
+    func testarDownloadDosFilmes(){
+        
+        let exp = expectation(description: "Pegar filmes")
+        
+        var filmes: [FilmeDecodable]?
+        
+        let quantidadeDeFilmesEsperada = 7
+        
+        dao.baixarFilmes { resultado in
+            
+            filmes = resultado
+            exp.fulfill()
+            
+        }
+        
+        waitForExpectations(timeout: 10) { erro in
+            
+            if let erro = erro {
+                 XCTFail("waitForExpectationsWithTimeout errored: \(erro)")
+            }
+            
+            print("Filmes:", filmes!)
+            
+            //NAO PODE SER NULO
+            XCTAssertFalse(filmes == nil)
+            //QUANTIDADE DE RESULTADOS DEVE SER IGUAL A QUANTIDADE ESPERADA
+            XCTAssertEqual(quantidadeDeFilmesEsperada, filmes!.count)
+         
+           }
+        
+    }
+    
 }
+    
