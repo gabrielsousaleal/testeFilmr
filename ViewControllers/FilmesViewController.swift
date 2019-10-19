@@ -15,7 +15,7 @@ class FilmesViewController: UIViewController {
     @IBOutlet var viewCima: UIView!
     @IBOutlet var logoView: UIImageView!
     @IBOutlet var collectionView: UICollectionView!
-    
+    @IBOutlet var conexaoView: UIView!
     
     //MARK: STORYBOARD CONSTRAINTS
     @IBOutlet var viewCimaTopConstraint: NSLayoutConstraint!
@@ -32,6 +32,8 @@ class FilmesViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         
         travarPortrait(.portrait)
+        
+        verificarConexao()
         
         setarLayoutCells()
         
@@ -119,6 +121,28 @@ class FilmesViewController: UIViewController {
 
         if let delegate = UIApplication.shared.delegate as? AppDelegate {
             delegate.orientationLock = orientation
+        }
+    }
+    
+    
+    //MARK: STORYBOARD ACTIONS
+    
+    @IBAction func reconectar(_ sender: Any) {
+        
+        viewDidLoad()
+        
+    }
+    
+    //MARK: INTERNET
+    
+    @objc func verificarConexao(){
+        
+        if !Internet.isConnectedToNetwork() {
+            
+            conexaoView.isHidden = false
+            
+        } else {
+            conexaoView.isHidden = true
         }
     }
     

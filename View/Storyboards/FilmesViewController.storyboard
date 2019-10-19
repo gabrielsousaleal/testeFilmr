@@ -112,15 +112,53 @@
                                     <constraint firstItem="Dqj-mX-Ari" firstAttribute="centerY" secondItem="G2l-iL-ZTr" secondAttribute="centerY" id="Qij-Eo-D42"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tyn-OU-WNa">
+                                <rect key="frame" x="0.0" y="598" width="375" height="69"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q3N-dZ-70g">
+                                        <rect key="frame" x="279" y="19" width="79" height="30"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.64313725489999995" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Reconectar">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="reconectar:" destination="UeU-5M-QZH" eventType="touchUpInside" id="biF-uX-Li5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sem conexão com a internet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aom-Ex-Kwo">
+                                        <rect key="frame" x="8" y="23" width="218" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.43892766500000002" green="0.0" blue="0.036887854560000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="aom-Ex-Kwo" secondAttribute="bottom" constant="25" id="IML-vv-2Cn"/>
+                                    <constraint firstItem="aom-Ex-Kwo" firstAttribute="leading" secondItem="tyn-OU-WNa" secondAttribute="leading" constant="8" id="MLt-Sc-BeJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q3N-dZ-70g" secondAttribute="bottom" constant="20" id="dGn-we-VZJ"/>
+                                    <constraint firstItem="Q3N-dZ-70g" firstAttribute="leading" secondItem="aom-Ex-Kwo" secondAttribute="trailing" constant="53" id="p9i-Kg-VN9"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q3N-dZ-70g" secondAttribute="trailing" constant="17" id="vro-Qb-Y5d"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="G2l-iL-ZTr" firstAttribute="trailing" secondItem="neq-Ju-SUn" secondAttribute="trailing" id="1Fk-FF-O3k"/>
+                            <constraint firstItem="tyn-OU-WNa" firstAttribute="trailing" secondItem="neq-Ju-SUn" secondAttribute="trailing" id="8Ff-fl-24g"/>
+                            <constraint firstItem="tyn-OU-WNa" firstAttribute="leading" secondItem="neq-Ju-SUn" secondAttribute="leading" id="EfL-W7-7aO"/>
                             <constraint firstItem="IuO-Cj-R5n" firstAttribute="trailing" secondItem="neq-Ju-SUn" secondAttribute="trailing" id="Ixd-h1-8ht"/>
+                            <constraint firstItem="tyn-OU-WNa" firstAttribute="top" secondItem="neq-Ju-SUn" secondAttribute="top" constant="554" id="JtW-KA-7uw"/>
                             <constraint firstItem="G2l-iL-ZTr" firstAttribute="top" secondItem="neq-Ju-SUn" secondAttribute="top" id="O2X-9r-jjd"/>
                             <constraint firstItem="IuO-Cj-R5n" firstAttribute="bottom" secondItem="neq-Ju-SUn" secondAttribute="bottom" id="OP8-mC-oYZ"/>
                             <constraint firstItem="IuO-Cj-R5n" firstAttribute="top" secondItem="G2l-iL-ZTr" secondAttribute="bottom" id="fVS-b3-NaE"/>
                             <constraint firstItem="IuO-Cj-R5n" firstAttribute="leading" secondItem="neq-Ju-SUn" secondAttribute="leading" id="klh-bF-aKt"/>
+                            <constraint firstItem="tyn-OU-WNa" firstAttribute="bottom" secondItem="neq-Ju-SUn" secondAttribute="bottom" id="mzP-sr-Pec"/>
                             <constraint firstItem="G2l-iL-ZTr" firstAttribute="leading" secondItem="neq-Ju-SUn" secondAttribute="leading" id="zCy-mi-ODK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="neq-Ju-SUn"/>
@@ -129,6 +167,7 @@
                     <connections>
                         <outlet property="collectionView" destination="IuO-Cj-R5n" id="pdK-DM-DLY"/>
                         <outlet property="collectionViewTopConstraint" destination="fVS-b3-NaE" id="GLC-1q-Lsy"/>
+                        <outlet property="conexaoView" destination="tyn-OU-WNa" id="ddG-F2-LeJ"/>
                         <outlet property="logoView" destination="Dqj-mX-Ari" id="y13-HX-Rmv"/>
                         <outlet property="viewCima" destination="G2l-iL-ZTr" id="WXe-V7-TaB"/>
                         <outlet property="viewCimaTopConstraint" destination="O2X-9r-jjd" id="laP-3m-onE"/>

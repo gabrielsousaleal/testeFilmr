@@ -30,6 +30,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet var botaoPlay2: UIButton!
     @IBOutlet var tempoAtual2: UILabel!
     @IBOutlet var tempoMaximo2: UILabel!
+    @IBOutlet var conexaoView: UIView!
     
     
     //MARK: VARIAVEIS
@@ -52,6 +53,8 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         
         liberarLandscape(.all)
+        
+        verificarConexao()
         
         addGesture()
         
@@ -178,7 +181,7 @@ class PlayerViewController: UIViewController {
          NSLayoutConstraint.activate([top,bottom,left,right,heigh,widht])
         
     }
- 
+     
     
     
     //MARK: GESTURE
@@ -444,6 +447,25 @@ class PlayerViewController: UIViewController {
             
         }
                 
+    }
+    
+    @IBAction func reconectar(_ sender: Any) {
+        
+        viewDidLoad()
+        
+    }
+    
+    //MARK: INTERNET
+    
+    @objc func verificarConexao(){
+        
+        if !Internet.isConnectedToNetwork() {
+            
+            conexaoView.isHidden = false
+            
+        } else {
+            conexaoView.isHidden = true
+        }
     }
     
 }
