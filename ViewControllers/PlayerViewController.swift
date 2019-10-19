@@ -436,10 +436,18 @@ class PlayerViewController: UIViewController {
         
     }
     
-    @IBAction func mudarTempoSlider(_ sender: Any) {
+    @IBAction func mudarTempoSlider(_ sender: UISlider) {
         
-        player?.seek(to: CMTime(seconds: Double(slider!.value), preferredTimescale: 1))
-        
+        if sender.restorationIdentifier == "slider2" {
+            
+            player?.seek(to: CMTime(seconds: Double(slider2!.value), preferredTimescale: 1))
+
+        } else {
+            
+            player?.seek(to: CMTime(seconds: Double(slider!.value), preferredTimescale: 1))
+            
+        }
+                
     }
     
 }

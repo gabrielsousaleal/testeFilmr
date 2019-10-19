@@ -76,7 +76,7 @@
                                     <action selector="voltarNoVideo:" destination="oJV-Ek-6zS" eventType="touchUpInside" id="w9U-tn-496"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5vO-OT-992">
+                            <slider opaque="NO" contentMode="scaleToFill" restorationIdentifier="slider2" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5vO-OT-992">
                                 <rect key="frame" x="14" y="513" width="386" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.10878124090000001" green="0.52744328979999999" blue="0.93438071010000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="thumbTintColor" red="0.10878124090000001" green="0.52744328979999999" blue="0.93438071010000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -117,7 +117,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="238"/>
                                                     </view>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blur" translatesAutoresizingMaskIntoConstraints="NO" id="wnl-59-DHf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="238"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8DG-v3-kZl">
                                                         <rect key="frame" x="159" y="72.666666666666657" width="65" height="65"/>
@@ -181,7 +181,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="LFh-pl-nJz" secondAttribute="bottom" constant="38" id="CYc-2G-bDJ"/>
                                                     <constraint firstAttribute="trailing" secondItem="jLb-Kf-8IR" secondAttribute="trailing" id="G2A-V3-SPD"/>
                                                     <constraint firstItem="wnl-59-DHf" firstAttribute="top" secondItem="KDB-ah-iba" secondAttribute="top" id="I7T-Er-TcZ"/>
-                                                    <constraint firstAttribute="bottom" secondItem="wnl-59-DHf" secondAttribute="bottom" constant="8" id="IL4-l4-V27"/>
+                                                    <constraint firstAttribute="bottom" secondItem="wnl-59-DHf" secondAttribute="bottom" id="IL4-l4-V27"/>
                                                     <constraint firstItem="wnl-59-DHf" firstAttribute="leading" secondItem="KDB-ah-iba" secondAttribute="leading" id="LbK-tR-Mg0"/>
                                                     <constraint firstItem="LFh-pl-nJz" firstAttribute="leading" secondItem="KDB-ah-iba" secondAttribute="leading" constant="10" id="MJ7-Ms-fGt"/>
                                                     <constraint firstItem="YfC-7x-usY" firstAttribute="centerY" secondItem="jLb-Kf-8IR" secondAttribute="centerY" constant="-14" id="Wc3-Bz-jqz"/>
