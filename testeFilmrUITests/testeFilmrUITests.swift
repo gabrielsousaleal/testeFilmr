@@ -9,35 +9,69 @@
 import XCTest
 
 class testeFilmrUITests: XCTestCase {
+    
+    var app: XCUIApplication!
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        app = XCUIApplication()
+            app.terminate()
+            continueAfterFailure = false
+            app.launch()
+        
+       
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+         app.terminate()
+        
     }
 
-    func testExample() {
-        // UI tests must launch the application that they test.
+    func testarCollectionView() {
+                                                
+        let verticalScrollBar3PagesCollectionView = XCUIApplication()/*@START_MENU_TOKEN@*/.collectionViews.containing(.other, identifier:"Vertical scroll bar, 3 pages").element/*[[".collectionViews.containing(.other, identifier:\"Horizontal scroll bar, 1 page\").element",".collectionViews.containing(.other, identifier:\"Vertical scroll bar, 3 pages\").element"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        verticalScrollBar3PagesCollectionView.swipeUp()
+        verticalScrollBar3PagesCollectionView.swipeUp()
+        verticalScrollBar3PagesCollectionView.swipeUp()
+        verticalScrollBar3PagesCollectionView.swipeDown()
+        verticalScrollBar3PagesCollectionView.swipeDown()
+        verticalScrollBar3PagesCollectionView.swipeDown()
+        verticalScrollBar3PagesCollectionView.swipeDown()
+                 
+    }
+    
+    func testarVideo() {
+        
+        
         let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app.collectionViews.cells.otherElements.containing(.staticText, identifier:"video 1").element.tap()
+        
+        let nextButton = app.buttons["next"]
+        nextButton.tap()
+        nextButton.tap()
+        
+        let backvideoButton = app.buttons["backVideo"]
+        backvideoButton.tap()
+        backvideoButton.tap()
+        app.buttons["pause"].tap()
+        app.buttons["play"].tap()
+        XCUIDevice.shared.orientation = .landscapeRight
+        
+        let element2 = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0)
+        let element = element2.children(matching: .other).element
+        element.tap()
+        
+        let nextButton2 = element2.buttons["next"]
+        nextButton2.tap()
+        nextButton2.tap()
+        
+        let backvideoButton2 = element2.buttons["backVideo"]
+        backvideoButton2.tap()
+        backvideoButton2.tap()
+        element2.buttons["pause"].tap()
+        element.tap()
+                  
+        
     }
-
-    func testLaunchPerformance() {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+    
 }

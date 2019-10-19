@@ -65,6 +65,7 @@ class PlayerViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        
         if UIDevice.current.orientation.isLandscape {
             
             if estaFullScreen { return }
@@ -73,59 +74,19 @@ class PlayerViewController: UIViewController {
      
             fullscreen.isHidden = false
             
-            antigoFrameVideoView = videoView.frame
-                        
-            videoView.translatesAutoresizingMaskIntoConstraints = true
-            
-            videoView.layer.borderWidth = 0
-
-            fullscreen.addSubview(videoView)
-            
-           let guide = view.safeAreaLayoutGuide
-           NSLayoutConstraint.activate([
-            fullscreen.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
-            fullscreen.bottomAnchor.constraint(equalToSystemSpacingBelow: guide.bottomAnchor, multiplier: 1.0),
-            fullscreen.leadingAnchor.constraint(equalToSystemSpacingAfter: guide.leadingAnchor, multiplier: 1.0),
-            fullscreen.trailingAnchor.constraint(equalToSystemSpacingAfter: guide.trailingAnchor, multiplier: 1.0)
-            ])
-            
-            let window = UIApplication.shared.keyWindow
-            
-            videoView.frame = CGRect(x: -window!.safeAreaInsets.bottom , y: 0, width: fullscreen.frame.height, height: fullscreen.frame.width ) 
+            configurarVideoLandscape()
 
         } else {
             
             if !estaFullScreen { return }
             
-            videoView.frame = CGRect(x: 0, y: 0, width: videoContainer.frame.height, height: videoContainer.frame.width)
-            
-            videoView.translatesAutoresizingMaskIntoConstraints = false
-            
             menuView.isHidden = true
-  
-            videoView.layer.borderWidth = 1
             
-            //videoView.frame = antigoFrameVideoView!
-                      
             fullscreen.isHidden = true
             
             estaFullScreen = false
             
-            videoContainer.addSubview(videoView)
-            
-            let top = NSLayoutConstraint(item: videoView!, attribute: .top, relatedBy: .equal, toItem: videoContainer, attribute: .top, multiplier: 1, constant: 0)
-
-             let bottom = NSLayoutConstraint(item: videoView!, attribute: .bottom, relatedBy: .equal, toItem: videoContainer, attribute: .bottom, multiplier: 1, constant: 0)
-
-             let left = NSLayoutConstraint(item: videoView!, attribute: .left, relatedBy: .equal, toItem: videoContainer, attribute: .left, multiplier: 1, constant: 0)
-
-             let right = NSLayoutConstraint(item: videoView!, attribute: .right, relatedBy: .equal, toItem: videoContainer, attribute: .right, multiplier: 1, constant: 0)
-            
-            let heigh =  videoView.heightAnchor.constraint(equalTo: videoContainer.heightAnchor, multiplier: 1.0)
-            
-            let widht =  videoView.widthAnchor.constraint(equalTo: videoContainer.widthAnchor, multiplier: 1.0)
-
-            NSLayoutConstraint.activate([top,bottom,left,right,heigh,widht])
+            configurarVideoPortrait()
             
          }
     }
@@ -167,10 +128,60 @@ class PlayerViewController: UIViewController {
                delegate.orientationLock = orientation
            }
        }
+    
+    func configurarVideoLandscape(){
+        
+        antigoFrameVideoView = videoView.frame
+                     
+         videoView.translatesAutoresizingMaskIntoConstraints = true
+         
+         videoView.layer.borderWidth = 0
+
+         fullscreen.addSubview(videoView)
+         
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+         fullscreen.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
+         fullscreen.bottomAnchor.constraint(equalToSystemSpacingBelow: guide.bottomAnchor, multiplier: 1.0),
+         fullscreen.leadingAnchor.constraint(equalToSystemSpacingAfter: guide.leadingAnchor, multiplier: 1.0),
+         fullscreen.trailingAnchor.constraint(equalToSystemSpacingAfter: guide.trailingAnchor, multiplier: 1.0)
+         ])
+         
+         let window = UIApplication.shared.keyWindow
+         
+         videoView.frame = CGRect(x: -window!.safeAreaInsets.bottom , y: 0, width: fullscreen.frame.height, height: fullscreen.frame.width )
+        
+    }
+    
+    func configurarVideoPortrait(){
+        
+         videoView.frame = CGRect(x: 0, y: 0, width: videoContainer.frame.height, height:  videoContainer.frame.width)
+                  
+         videoView.translatesAutoresizingMaskIntoConstraints = false
+        
+         videoView.layer.borderWidth = 1
+                                        
+         videoContainer.addSubview(videoView)
+                  
+         let top = NSLayoutConstraint(item: videoView!, attribute: .top, relatedBy: .equal, toItem: videoContainer, attribute: .top, multiplier: 1, constant: 0)
+
+         let bottom = NSLayoutConstraint(item: videoView!, attribute: .bottom, relatedBy: .equal, toItem: videoContainer, attribute: .bottom, multiplier: 1, constant: 0)
+
+         let left = NSLayoutConstraint(item: videoView!, attribute: .left, relatedBy: .equal, toItem: videoContainer, attribute: .left, multiplier: 1, constant: 0)
+
+         let right = NSLayoutConstraint(item: videoView!, attribute: .right, relatedBy: .equal, toItem: videoContainer, attribute: .right, multiplier: 1, constant: 0)
+                  
+         let heigh =  videoView.heightAnchor.constraint(equalTo: videoContainer.heightAnchor, multiplier: 1.0)
+                  
+         let widht =  videoView.widthAnchor.constraint(equalTo: videoContainer.widthAnchor, multiplier: 1.0)
+
+         NSLayoutConstraint.activate([top,bottom,left,right,heigh,widht])
+        
+    }
  
     
     
-    //MARK: FULLSCREEN
+    //MARK: GESTURE
     func addGesture(){
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(mostrarMenu))
@@ -197,63 +208,81 @@ class PlayerViewController: UIViewController {
         
         }
     
+    func popularMenu() {
+        
+        //PEGANDO O VALOR EM SEGUNDOS DO TEMPO MAXIMO DO VIDEO
+        let valorMaximo = self.player?.currentItem?.duration.value
+        let timescaleMaximo = self.player?.currentItem?.duration.timescale
+        if valorMaximo == 0 { return }
+        self.tempoMaximoInt = Int(valorMaximo!) / Int(timescaleMaximo!)
+        
+        //COLOCANDO O VALOR NO SLIDER (PORTRAIT E LANDSCAPE)
+        self.slider.maximumValue = Float(self.tempoMaximoInt!)
+        self.slider2.maximumValue = Float(self.tempoMaximoInt!)
+        
+        //CONVERTENDO SEGUNDOS EM MINUTOS
+        let minutosMaximo = (self.tempoMaximoInt! % 3600) / 60
+        let segundosMaximmo = (self.tempoMaximoInt! % 3600) % 60
+        
+        var segundosStringMaximo = ""
+        
+        //CONFIGURANDO LABEL DE SEGUNDOS
+        if segundosMaximmo < 10 {
+            segundosStringMaximo = "0\(segundosMaximmo)"
+        } else {
+            segundosStringMaximo = "\(segundosMaximmo)"
+        }
+        
+        
+        self.tempoMaximo.text = "\(minutosMaximo):\(segundosStringMaximo)"
+        self.tempoMaximo2.text = "\(minutosMaximo):\(segundosStringMaximo)"
+        
+        //PEGANDO O VALOR EM SEGUNDOS DO TEMPO ATUAL DO VIDEO
+        let valorAtual = self.player?.currentItem?.currentTime().value
+        let timescaleAtual = self.player?.currentItem?.currentTime().timescale
+        self.tempoAtualInt = Int(valorAtual!) / Int(timescaleAtual!)
+        
+        //COLOCANDO O VALOR NO SLIDER (PORTRAIT E LANDSCAPE)
+        self.slider.value = Float(self.tempoAtualInt!)
+        self.slider2.value = Float(self.tempoAtualInt!)
+        
+        //CONVERTENDO SEGUNDOS EM MINUTOS
+        let minutosAtual = (self.tempoAtualInt! % 3600) / 60
+        let segundosAtual = (self.tempoAtualInt! % 3600) % 60
+        
+        
+        var segundosStringAtual = ""
+                   
+        if segundosAtual < 10 {
+            segundosStringAtual = "0\(segundosAtual)"
+            } else {
+            segundosStringAtual = "\(segundosAtual)"
+        }
+        
+        self.tempoAtual.text = "\(minutosAtual):\(segundosStringAtual)"
+        self.tempoAtual2.text = "\(minutosAtual):\(segundosStringAtual)"
+        
+        
+        //SE O VIDEO ACABAR, TROCAR A IMAGEM DO BOTAO DE PLAY
+        if self.tempoAtualInt == self.tempoMaximoInt {
+            
+            self.botaoPlay.setImage(UIImage(named: "play"), for: .normal)
+            self.botaoPlay2.setImage(UIImage(named: "play"), for: .normal)
+            
+        }
+        
+    }
+    
     func addObservables(){
         
+        //OBSERVADOR PARA CADA SEGUNDO DO VIDEO
         observable = player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: .main, using: { time in
+            
               self.carregando = false
+            
               self.loading?.stopAnimating()
             
-            let valorMaximo = self.player?.currentItem?.duration.value
-            let timescaleMaximo = self.player?.currentItem?.duration.timescale
-            if valorMaximo == 0 { return }
-            self.tempoMaximoInt = Int(valorMaximo!) / Int(timescaleMaximo!)
-            
-            self.slider.maximumValue = Float(self.tempoMaximoInt!)
-            self.slider2.maximumValue = Float(self.tempoMaximoInt!)
-            
-            let minutosMaximo = (self.tempoMaximoInt! % 3600) / 60
-            let segundosMaximmo = (self.tempoMaximoInt! % 3600) % 60
-            
-            var segundosStringMaximo = ""
-            
-            if segundosMaximmo < 10 {
-                segundosStringMaximo = "0\(segundosMaximmo)"
-            } else {
-                segundosStringMaximo = "\(segundosMaximmo)"
-            }
-            
-            
-            self.tempoMaximo.text = "\(minutosMaximo):\(segundosStringMaximo)"
-            self.tempoMaximo2.text = "\(minutosMaximo):\(segundosStringMaximo)"
-            
-            let valorAtual = self.player?.currentItem?.currentTime().value
-            let timescaleAtual = self.player?.currentItem?.currentTime().timescale
-            self.tempoAtualInt = Int(valorAtual!) / Int(timescaleAtual!)
-            
-            self.slider.value = Float(self.tempoAtualInt!)
-            self.slider2.value = Float(self.tempoAtualInt!)
-            
-            let minutosAtual = (self.tempoAtualInt! % 3600) / 60
-            let segundosAtual = (self.tempoAtualInt! % 3600) % 60
-            
-            
-            var segundosStringAtual = ""
-                       
-                       if segundosAtual < 10 {
-                           segundosStringAtual = "0\(segundosAtual)"
-                       } else {
-                           segundosStringAtual = "\(segundosAtual)"
-                       }
-            
-            self.tempoAtual.text = "\(minutosAtual):\(segundosStringAtual)"
-            self.tempoAtual2.text = "\(minutosAtual):\(segundosStringAtual)"
-            
-            if self.tempoAtualInt == self.tempoMaximoInt {
-                
-                self.botaoPlay.setImage(UIImage(named: "play"), for: .normal)
-                self.botaoPlay2.setImage(UIImage(named: "play"), for: .normal)
-                
-            }
+               self.popularMenu()
             
         
           })
@@ -266,23 +295,32 @@ class PlayerViewController: UIViewController {
         playerLayer!.player = player
         playerLayer!.videoGravity = AVLayerVideoGravity.resizeAspectFill
         player!.automaticallyWaitsToMinimizeStalling = true
-        playerLayer!.borderColor = #colorLiteral(red: 0.1087812409, green: 0.5274432898, blue: 0.9343807101, alpha: 1)
-        playerLayer!.borderWidth = 1
         
     }
     
     func mostrarLoading() {
+        
         loading = UIActivityIndicatorView()
-        loading!.frame = videoView.bounds
-        loading?.center.x = self.view.center.x - 10
+        loading!.frame = CGRect(x: 0, y: 0, width:videoView.frame.width, height: videoView.frame.height)
         loading?.color = .white
         loading!.hidesWhenStopped = true
         videoView.addSubview(loading!)
         loading!.startAnimating()
+        loading?.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+        
+            NSLayoutConstraint(item: loading!, attribute: .centerX, relatedBy: .equal, toItem: videoView, attribute: .centerX, multiplier: 1, constant: 0),
+            
+             NSLayoutConstraint(item: loading!, attribute: .centerY, relatedBy: .equal, toItem: videoView, attribute: .centerY, multiplier: 1, constant: 0)
+            
+        ])
+        
     }
     
     @objc func mostrarMenu(gesture: UITapGestureRecognizer){
         
+        //MOSTRAR MENU APENAS QUANDO FULLSCREEN
         if carregando || !estaFullScreen { return }
         
         if menuView.isHidden {
@@ -343,6 +381,7 @@ class PlayerViewController: UIViewController {
         botaoPlay.setImage(imagem, for: .normal)
         botaoPlay2.setImage(imagem, for: .normal)
         
+        //SE O VIDEO TIVER ACABO, REINICIAR
         if self.tempoAtualInt == self.tempoMaximoInt {
             
             self.botaoPlay.setImage(UIImage(named: "pause"), for: .normal)
