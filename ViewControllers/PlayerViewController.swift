@@ -411,8 +411,6 @@ class PlayerViewController: UIViewController {
                   let selectedTime: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
                   player!.seek(to: selectedTime)
               }
-              player?.pause()
-              player?.play()
               }
         
     }
@@ -430,8 +428,6 @@ class PlayerViewController: UIViewController {
             let selectedTime: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
             player!.seek(to: selectedTime)
         }
-        player?.pause()
-        player?.play()
         }
         
     }
